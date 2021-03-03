@@ -23,9 +23,10 @@
         <tbody>
         {% for board in boards%}
         <tr>
-            <td>{{board.name}}
-                <small class="text-muted d-block">{{board.description}}</small></td>
-
+            <td>
+                <a href="{% url 'board_topics' board.pk %}">{{board.name}}</a>
+                <small class="text-muted d-block">{{board.description}}</small>
+            </td>
             <td>0</td>
             <td>0</td>
             <td></td>
