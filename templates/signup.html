@@ -5,7 +5,7 @@
 <div class="container">
 
     <h1>Sign up</h1>
-    <form method="post">
+    <form method="post" novalidate>
         {%csrf_token%}
         {%include 'include/form.html'%}
         <button type="submit" class="btn btn-primary">Create New User</button>
