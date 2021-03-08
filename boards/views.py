@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
+from django.utils.decorators import method_decorator
+from django.views.generic import UpdateView
 
 from .forms import NewTopicForm, PostForm
 from .models import Board, Post, Topic
@@ -69,3 +72,20 @@ def replay_topic(request, board_id, topic_id):
             form = PostForm()
 
     return render(request, 'replay_topic.html', {'topic': topic, 'form': form})
+
+
+@method_decorator(login_required, name='dispatch')
+class PostUpdateView(UpdateView):
+    model = Post
+    fields = ('message',)
+    template_name = 'edit_post.html'
+    pk_url_kwarg = 'post_id'
+    context_object_name = 'post'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.updated_by = self.request.user
+        post.updated_dt = timezone.now()
+        post.save()
+
+        return redirect('topic_posts', board_id=post.topic.board.pk, topic_id=post.topic.pk)
