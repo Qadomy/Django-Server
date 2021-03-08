@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import NewTopicForm
+from .forms import NewTopicForm, PostForm
 from .models import Board, Post, Topic
 
 
@@ -44,3 +44,23 @@ def new_topic(request, board_id):
 def topic_posts(request, board_id, topic_id):
     topic = get_object_or_404(Topic, board__pk=board_id, pk=topic_id)
     return render(request, 'topic_posts.html', {'topic': topic})
+
+
+@login_required
+def replay_topic(request, board_id, topic_id):
+    topic = get_object_or_404(Topic, board__pk=board_id, pk=topic_id)
+    form = PostForm()
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.topic = topic
+            post.created_by = request.user
+            post.save()
+
+            return redirect('topic_posts', board_id=board_id, topic_id=topic_id)
+
+        else:
+            form = PostForm()
+
+    return render(request, 'replay_topic.html', {'topic': topic, 'form': form})

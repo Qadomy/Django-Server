@@ -11,6 +11,9 @@
 
 
 {% block content %}
+<div class="mb-4">
+    <a href="{%url 'replay_topic' topic.board.pk topic.pk%}" class="btn btn-primary">Replay</a>
+</div>
 
 {%for post in topic.posts.all%}
 <div class="card mb-2">
