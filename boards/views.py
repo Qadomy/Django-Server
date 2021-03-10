@@ -59,9 +59,15 @@ def new_topic(request, board_id):
 
 def topic_posts(request, board_id, topic_id):
     topic = get_object_or_404(Topic, board__pk=board_id, pk=topic_id)
-    # increase view number
-    topic.views += 1
-    topic.save()
+
+    # make unique views
+    session_key = 'view_topic_{}'.format(topic.pk)
+    if not request.session.get(session_key, False):
+        # increase view number
+        topic.views += 1
+        topic.save()
+        request.session[session_key] = True
+
     return render(request, 'topic_posts.html', {'topic': topic})
 
 
