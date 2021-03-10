@@ -13,6 +13,8 @@ urlpatterns = [
          name='password_change'),
     path('settings/change_password/done',
          auth_views.PasswordChangeDoneView.as_view(template_name='change_password_done.html'),
-         name='password_change_done')
+         name='password_change_done'),
+
+    path('account/', views.UserUpdateView.as_view(), name='my_account'),
 
 ]

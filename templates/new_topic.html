@@ -12,9 +12,7 @@
 {% block content %}
 <form method="post" novalidate>
     {% csrf_token %}
-
     {%include 'include/form.html'%}
-
     <br>
     <button type="submit" class="btn btn-success">Add</button>
 </form>
