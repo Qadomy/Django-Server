@@ -77,6 +77,11 @@ def replay_topic(request, board_id, topic_id):
             post.created_by = request.user
             post.save()
 
+            # add last time updated
+            topic.updated_by = request.user
+            topic.updated_dt = timezone.now()
+            topic.save()
+
             return redirect('topic_posts', board_id=board_id, topic_id=topic_id)
 
         else:
