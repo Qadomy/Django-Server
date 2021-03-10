@@ -36,3 +36,8 @@ admin.site.unregister(Group)
 # name
 admin.site.site_header = "Boards Admin Panel"
 admin.site.site_title = "Boards Admin Panel"
+
+# import export
+# @admin.register(Topic)
+# class TopicAdmin2(ImportExportModelAdmin):
+#     pass

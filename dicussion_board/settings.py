@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'boards.apps.SuitConfig',
+    # 'boards.apps.SuitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'boards',
     'accounts',
+    # 'import_export',
 ]
 
 MIDDLEWARE = [
